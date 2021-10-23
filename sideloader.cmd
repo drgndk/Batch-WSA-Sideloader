@@ -34,10 +34,10 @@ goto HAS_FILE
         <script>
             window.resizeTo(360,172);
 
-            function closeHTA(file,ip){
+            function closeHTA(file){
             if(file == null) return false;
             var fso = new ActiveXObject("Scripting.FileSystemObject");
-            fso.GetStandardStream(1).WriteLine('"'+file.value+'"');
+            fso.GetStandardStream(1).WriteLine('"'+file+'"');
             window.close();
             }
         </script>
@@ -93,6 +93,6 @@ goto HAS_FILE
         <span>Browse for the APK File you want to install</span>
         <input id="file" type="file" placeholder="APK File">
         <br>
-        <input class="submit" type="submit" value="Install" onclick="closeHTA(document.getElementById('file'));">
+        <input class="submit" type="submit" value="Install" onclick="closeHTA(document.getElementById('file').value);">
     </body>
 </html>
