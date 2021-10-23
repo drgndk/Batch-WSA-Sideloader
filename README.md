@@ -9,7 +9,9 @@ Or just Doubleclick the Script to start the GUI and Install your APK like this.
 ![Install UI](https://i.imgur.com/WxxPzWh.png)
 
 # Requirements
-DeveloperMode must be on and the WSA Emulator needs to be running.
+[ADB](https://developer.android.com/studio/command-line/adb) (Android Debug Bridge) must be installed and callable for the Command Prompt
+
+WSA Developer Mode must be on and the WSA Emulator needs to be running.
 Check if in the Dev Mode Description is the localhost IP
 
 ![DevMode](https://i.imgur.com/uUscf3u.png)
