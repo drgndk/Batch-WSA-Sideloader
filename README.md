@@ -3,6 +3,8 @@
 >
 > Thats because its from an unknown source and its a Batch file.
 
+Its not. If you unsure check the Code for yourself.
+
 # Batch WSA Sideloader
 
 A simple Sideload for the Windows Subsystem for Android(TM) to install any APK file
