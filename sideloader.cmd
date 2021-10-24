@@ -6,7 +6,7 @@ title %APPLICATION_NAME% by G6D Version %APPLICATION_VERSION%
 
 IF NOT [%1] EQU [] goto QUICKINSTALL
 mshta.exe "%~F0"
-exit
+pause
 :QUICKINSTALL
 adb connect 127.0.0.1:58526
 cls
@@ -14,7 +14,7 @@ echo Fast Installer
 echo.
 adb install %1
 adb disconnect 127.0.0.1:58526
-exit
+pause
 -->
 
 <html>
@@ -179,24 +179,6 @@ exit
             .file-input:hover {
                 background: #4E5BA6;
             }
-            .file-input:active {
-                background: #9fa1a0;
-            }
-            .file-input:invalid+span {
-                color: #000000;
-            }
-            .file-input:valid+span {
-                color: #000000;
-            }
-
-            .progress_bar {
-                width: 100%;
-                height: 4px;
-                background: #FEC84B;
-                position: absolute;
-                top: 0px;
-                left: 0px;
-            }
         </style>
     </head>
     <body>
@@ -216,13 +198,14 @@ exit
         <div id="install" class="install-btn select" onclick="document.getElementById('search-file').click();">
             <span class="material-icons">&#xE2C7;</span> Choose File
         </div>
-        <div id="progress_bar" class="progress_bar" style="width:0%"></div>
         <script>
             var fileInput = document.getElementById('file');
             var ipInput = document.getElementById('ip');
             var PGRbar = document.getElementById('progress_bar');
 
             function runCommand(command) {
+                
+                alert(command);
                 var wshShell = new ActiveXObject("WScript.Shell");
                 var execOut = wshShell.Exec(command);
                 var cmdStdOut = execOut.StdOut;
@@ -230,20 +213,15 @@ exit
             }
 
             function install(file) {
-                PGRbar.setAttribute("style","width:0%");
                 var ip = ipInput.value;
                 var output = runCommand("adb connect "+ip);
 
                 if(output.split("").slice(0,9).join("") == "connected" || output.split("").slice(0,17).join("") == "already connected") {
-                    PGRbar.setAttribute("style","width:10%");
-                    runCommand('adb install"'+file+'"');
-                    PGRbar.setAttribute("style","width:75%");
+                    runCommand('adb install "'+file+'"');
                     output = runCommand("adb disconnect "+ip);
-                    PGRbar.setAttribute("style","width:100%");
                 }else {
                     ipInput.setAttribute("error","True");
                 }
-                PGRbar.setAttribute("style","width:0%");
             }
 
             ipInput.oninput = function () {
