@@ -5,7 +5,9 @@
 
 Its not. If you unsure check the Code for yourself.
 
-# Batch WSA Sideloader ![Visitor](https://visitor-badge.laobi.icu/badge?page_id=GitSisDope.Batch-WSA-Sideloader)
+# Batch WSA Sideloader
+
+![Website](https://img.shields.io/website?down_message=Offline&label=g6d.org&up_message=Online&url=https%3A%2F%2Fg6d.org) ![GitHub issues](https://img.shields.io/github/issues/GitSisDope/Batch-WSA-Sideloader) ![GitHub repo size](https://img.shields.io/github/repo-size/GitSisDope/Batch-WSA-Sideloader?color=dark-green) ![GitHub all releases](https://img.shields.io/github/downloads/GitSisDope/Batch-WSA-Sideloader/total?color=dark-green) ![GitHub release (latest by date)](https://img.shields.io/github/v/release/GitSisDope/Batch-WSA-Sideloader?color=dark-green) ![Visitor](https://visitor-badge.laobi.icu/badge?page_id=GitSisDope.Batch-WSA-Sideloader) ![GitHub](https://img.shields.io/github/license/GitSisDope/Batch-WSA-Sideloader)
 
 A simple Sideload for the Windows Subsystem for Android(TM) to install any APK file
 
