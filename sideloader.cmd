@@ -6,7 +6,7 @@ title %APPLICATION_NAME% by G6D Version %APPLICATION_VERSION%
 
 IF NOT [%1] EQU [] goto QUICKINSTALL
 mshta.exe "%~F0"
-pause
+exit
 :QUICKINSTALL
 adb connect 127.0.0.1:58526
 cls
@@ -14,7 +14,7 @@ echo Fast Installer
 echo.
 adb install %1
 adb disconnect 127.0.0.1:58526
-pause
+exit
 -->
 
 <html>
