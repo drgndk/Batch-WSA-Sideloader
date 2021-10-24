@@ -29,8 +29,7 @@ You can find your IPs in the WSA Settings
 # Requirements
 - [ADB](https://developer.android.com/studio/command-line/adb) (Android Debug Bridge) must be installed and callable for the Command Prompt
 
-Only if the UI doesnt look like the Example
-- [IE9+](https://www.microsoft.com/en-us/download/internet-explorer.aspx)
+- [IE9+](https://www.microsoft.com/en-us/download/internet-explorer.aspx) Only if the UI doesnt look like the Example
 
 - A WSA Emulator needs to be running.
 
