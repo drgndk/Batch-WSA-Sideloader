@@ -1,117 +1,29 @@
-<!-- :: Batch Bootloader
+<!-- :: Batch section
 @echo off
-
-set DEFAULT_WSA_DEVICE_IP=127.0.0.1:58526
-set WSA_DEVICE_IP=%DEFAULT_WSA_DEVICE_IP%
 set "APPLICATION_NAME=WSA Sideloader"
-set APPLICATION_VERSION=1.1
-set "APK_PATH=%1"
+set APPLICATION_VERSION=1.1.2
 title %APPLICATION_NAME% by G6D Version %APPLICATION_VERSION%
-:CHECK
-IF [%APK_PATH%] EQU [] goto NO_FILE
-goto HAS_FILE
-:NO_DEVICE
+
+IF NOT [%1] EQU [] goto QUICKINSTALL
+mshta.exe "%~F0"
+exit
+:QUICKINSTALL
+adb connect 127.0.0.1:58526
 cls
-echo %APPLICATION_NAME%
-echo by G6D
+echo Fast Installer
 echo.
-echo Debug Info:
-echo Section: NO_DEVICE
-echo Current Progress: Change Device IP
-for /F "delims=" %%a in ('mshta.exe "%~F0"') do %%a 
-goto CHECK
-:NO_FILE
-cls
-echo %APPLICATION_NAME%
-echo by G6D
-echo.
-echo Debug Info:
-echo Section: NO_FILE
-echo Current Progress: Browse for File
-for /F "delims=" %%a in ('mshta.exe "%~F0"') do %%a
-:HAS_FILE
-cls
-echo %APPLICATION_NAME%
-echo by G6D
-echo.
-echo Debug Info:
-echo Section: HAS_FILE
-echo File Path: %APK_PATH%
-echo Current Progress: Check Connection
-echo.
-goto CONNECT
-:MULTIPLE_DEVICES
-cls
-echo %APPLICATION_NAME%
-echo by G6D
-echo.
-echo Debug Info:
-echo Section: MULTIPLE_DEVICES
-echo Current Progress: Clearing all devices
-for /F "delims=device skip=1" %A in ('adb devices') do adb disconnect %~A
-:CONNECT
-for /F "delims=" %%a in ('adb connect %WSA_DEVICE_IP%') do echo.%%a | find /I "connected" && (goto CONNECTED) || (goto NOT_CONNECTED)
-:NOT_CONNECTED
-cls
-echo %APPLICATION_NAME%
-echo by G6D
-echo.
-echo Debug Info:
-echo Section: NOT_CONNECTED
-echo Current Variable Value: %WSA_DEVICE_IP%
-echo.
-for /F "delims=" %%a in ('mshta.exe "%~F0"') do %%a
-goto CONNECT
-:CONNECTED
-cls
-echo %APPLICATION_NAME%
-echo by G6D
-echo.
-echo Debug Info:
-echo Section: IS_CONNECTED
-echo Connected Device: %WSA_DEVICE_IP%
-echo Current Progress: Install File
-echo.
-for /F "delims=" %%a in ('adb install %APK_PATH%') do set "IS_INSTALLED=%%a"
-adb disconnect %WSA_DEVICE_IP%
-if "%IS_INSTALLED%" EQU "Success" goto INSTALLED
-:INSTALLTION_FAILED
-cls
-echo %APPLICATION_NAME%
-echo by G6D
-echo.
-echo Debug Info:
-echo Section: INSTALLTION_FAILED
-echo.
-echo Error while the installation of %APK_PATH%
-echo Error: %IS_INSTALLED%
-echo.
-echo Press any key to exit...
-pause >nul
-goto EXIT_SCRIPT
-:INSTALLED
-cls
-echo %APPLICATION_NAME%
-echo by G6D
-echo.
-echo Debug Info:
-echo Section: INSTALLED
-echo.
-echo Successfully insalled %APK_PATH%
-echo.
-echo Press any key to exit...
-pause >nul
-:EXIT_SCRIPT
-for /F "delims=device skip=1" %A in ('adb devices') do adb disconnect %~A
+adb install %1
+adb disconnect 127.0.0.1:58526
 exit
 -->
 
 <html>
-    <HTA:APPLICATION ID="g6dwsasl" APPLICATIONNAME="WSA Sideloader by G6D"
-    MAXIMIZEBUTTON="no" MINIMIZEBUTTON="no" SELECTION="no" ICON=""
-    SCROLL="NO" BORDER="DIALOG">
     <head>
+        <meta http-equiv="x-ua-compatible" content="ie=9">
         <title>WSA Sideloader by G6D</title>
+        <HTA:APPLICATION ID="g6dwsasl" APPLICATIONNAME="WSA Sideloader by G6D"
+        MAXIMIZEBUTTON="no" MINIMIZEBUTTON="no" SELECTION="no" ICON="https://gitsisdope.github.io/resources/icons/logo-96.ico"
+        SCROLL="NO" BORDER="DIALOG" navigable="yes"/>
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -119,76 +31,234 @@ exit
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
         <script>
-            window.resizeTo(360,260);
-            function closeHTA(file,ip){
-                if(file == null || ip == null) return false;
-                var fso = new ActiveXObject("Scripting.FileSystemObject");
-                    var file_cmd = 'set APK_PATH="'+file+'"';
-                    var ip_cmd = 'set WSA_DEVICE_IP='+ip;
-                fso.GetStandardStream(1).WriteLine(file_cmd);
-                fso.GetStandardStream(1).WriteLine(ip_cmd);
-                window.close();
-            }
+            window.resizeTo(360,282);
         </script>
         <style>
             * {
+                user-select:none;
                 font-family: 'Poppins', sans-serif;
-                color: #ECF0F1;
+                color: #C8CCE5;
+                margin: 0;
+                padding: 0;
+                outline: none;
+                border: 0px;
             }
 
             html,body {
-                background-color: #2c3e50;
-                overflow: hidden;
-                outline: none;
-                border: 0px;
+                background: rgb(41,48,86);
+                background: linear-gradient(90deg, rgba(41,48,86,1) 0%, rgba(54,63,114,1) 100%);
+
+                width: 100%;
+                height: 100%;
             }
+
             body {
+                position: absolute;
+                top: 0px;
+            }
+
+            section {
+                
+                width: calc(100% - 24px);
+                position: relative;
+                top: 0px;
+                left: 12px;
+
+                border-radius: 10px;
                 margin-top: 12px;
             }
 
-            input {
-                
-                height: 24px;
-                line-height: 24px;
-                background-color: #34495E;
-                margin-bottom: 6px;
-                overflow: hidden;
-                outline: none;
-                border: 0px;
-                width: 320px;
-                
+            section label {
+                margin-left: 18px;
             }
 
-            span,small {
-                text-align: center;
+            label .material-icons {
+                font-size: 16px;
+                position: relative;
+                top: 2px;
+                left: -6px;
+                color: #ECF0F1;
+            }
+
+            section small {
                 display: block;
-                margin-bottom: 6px;
+                font-size: 11px;
+                margin-left: 12px;
+                margin-top: 2px;
+                width: 85%;
+                
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
 
-            small {
-                font-size: 12px;
-                margin-bottom: 3px;
+            input {
+                width: calc(100% - 36px);
+                height: 32px;
+                line-height: 32px;
+                padding-left: 12px;
+                position: relative;
+                left: 12px;
+                background: #363F72;
+                border-radius: 5px;
+                border: 0px solid;
+                box-shadow: 0 1.5px 35px -10px #101323;
             }
-            .submit {
-                cursor: pointer;
+
+            input[error="True"] {
+                width: calc(100% - 38px);
+                height: 30px;
+                line-height: 30px;
+                border: 1px solid #F04438;
+            }
+
+            .ip::-ms-clear {
+                display: none;
+            }
+
+            .install-btn {
+                border-radius: 5px;
+                box-shadow: 0 1.5px 35px -10px #101323;
+                width: calc(100% - 48px);
                 height: 48px;
                 line-height: 48px;
                 font-size: 24px;
-                font-weight: 500;
-            }
-            .ip {
+                position: absolute;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                padding: 0 12px;
+                bottom: 12px;
+                left: 12px;
+                cursor: pointer;
+                background: #2ECC71;
+                background: linear-gradient(90deg, #2ECC71 0%, #27AE60 100%);
+                opacity: .95;
+                color: #ECF0F1;
                 text-align: center;
+            }
+            .install-btn.select {
+                background: #FEC84B;
+                color: #7A2E0E;
+            }
+            .install-btn .material-icons {
+                position: relative;
+                top: 4px;
+                left: -2px;
+                color: #ECF0F1;
+            }
+            .install-btn:hover {
+                opacity: 1;
+            }
+
+            .file-input {
+                width: calc(100% - 36px);
+                height: 32px;
+                line-height: 32px;
+                padding-left: 12px;
+                position: relative;
+                margin: 0;
+                left: 12px;
+                background: #363F72;
+                border-radius: 5px;
+                border: 0px solid;
+                box-shadow: 0 1.5px 35px -10px #101323;
+                display: inline-block;
+                text-align: center;
+                cursor: pointer;
+                position: relative;
+            }
+
+            .file-input input[type="file"] {
+                display: none;
+                height: 0px;
+                width: 0px;
+                position: absolute;
+                top: -1000px;
+            }
+            .file-input:hover {
+                background: #4E5BA6;
+            }
+            .file-input:active {
+                background: #9fa1a0;
+            }
+            .file-input:invalid+span {
+                color: #000000;
+            }
+            .file-input:valid+span {
+                color: #000000;
+            }
+
+            .progress_bar {
+                width: 100%;
+                height: 4px;
+                background: #FEC84B;
+                position: absolute;
+                top: 0px;
+                left: 0px;
             }
         </style>
     </head>
     <body>
-        <span>WSA Device IP</span>
-        <small>Default: 127.0.0.1:58526</small>
-        <input id="ip" class="ip" placeholder="127.0.0.1:58526" value="127.0.0.1:58526">
-        <br>
-        <span>Browse for the APK File you want to install</span>
-        <input id="file" type="file" placeholder="APK File" value="">
-        <br>
-        <input class="submit" type="submit" value="Install" onclick="closeHTA(document.getElementById('file').value,document.getElementById('ip').value);">
+        <section name="IP">
+            <label><span class="material-icons">&#xE325;</span>WSA Device IP</label>
+            <input id="ip" class="ip" error="false" placeholder="127.0.0.1:58526" value="127.0.0.1:58526">
+            <small id="default">Default: 127.0.0.1:58526</small>
+        </section>
+        <section name="APK_FILE">
+            <label><span class="material-icons">&#xE226;</span>Your APK File</label>
+            <label id="search-file" class="file-input">
+                <input id="file" type="file" required/>
+                <span id="select">Select a file</span>
+            </label>
+            <small id="selected_file">No File Selected</small>
+        </section>
+        <div id="install" class="install-btn select" onclick="document.getElementById('search-file').click();">
+            <span class="material-icons">&#xE2C7;</span> Choose File
+        </div>
+        <div id="progress_bar" class="progress_bar" style="width:0%"></div>
+        <script>
+            var fileInput = document.getElementById('file');
+            var ipInput = document.getElementById('ip');
+            var PGRbar = document.getElementById('progress_bar');
+
+            function runCommand(command) {
+                var wshShell = new ActiveXObject("WScript.Shell");
+                var execOut = wshShell.Exec(command);
+                var cmdStdOut = execOut.StdOut;
+                return cmdStdOut.ReadLine();
+            }
+
+            function install(file) {
+                PGRbar.setAttribute("style","width:0%");
+                var ip = ipInput.value;
+                var output = runCommand("adb connect "+ip);
+
+                if(output.split("").slice(0,9).join("") == "connected" || output.split("").slice(0,17).join("") == "already connected") {
+                    PGRbar.setAttribute("style","width:10%");
+                    runCommand('adb install"'+file+'"');
+                    PGRbar.setAttribute("style","width:75%");
+                    output = runCommand("adb disconnect "+ip);
+                    PGRbar.setAttribute("style","width:100%");
+                }else {
+                    ipInput.setAttribute("error","True");
+                }
+                PGRbar.setAttribute("style","width:0%");
+            }
+
+            ipInput.oninput = function () {
+                if(ipInput.getAttribute("error")=="True") {
+                    ipInput.setAttribute("error","false");
+                }
+            }
+
+            fileInput.onchange = function() {
+                document.getElementById('selected_file').innerText = fileInput.value;
+                document.getElementById('select').innerText = "File Selected"
+                document.getElementById('install').innerHTML = '<span class="material-icons">&#xEB71;</span>'+" Install";
+                document.getElementById('install').setAttribute("class","install-btn");
+                document.getElementById('install').setAttribute("onclick","install(fileInput.value)");
+            }
+        </script>
     </body>
 </html>
