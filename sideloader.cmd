@@ -204,8 +204,6 @@ exit
             var PGRbar = document.getElementById('progress_bar');
 
             function runCommand(command) {
-                
-                alert(command);
                 var wshShell = new ActiveXObject("WScript.Shell");
                 var execOut = wshShell.Exec(command);
                 var cmdStdOut = execOut.StdOut;
