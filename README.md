@@ -5,7 +5,7 @@
 
 Its not. If you unsure check the Code for yourself.
 
-# Batch WSA Sideloader
+# Batch WSA Sideloader ![Visitor](https://visitor-badge.laobi.icu/badge?page_id=GitSisDope.Batch-WSA-Sideloader)
 
 A simple Sideload for the Windows Subsystem for Android(TM) to install any APK file
 
