@@ -1,16 +1,18 @@
 <!-- :: Batch section
 @echo off
-if not DEFINED IS_MINIMIZED set IS_MINIMIZED=1 && start "" /min "%~dpnx0" %* && exit
-REM
 
 set "APPLICATION_NAME=WSA Sideloader"
 set APPLICATION_VERSION=1.1.3
 title %APPLICATION_NAME% by G6D Version %APPLICATION_VERSION%
 
 IF NOT [%1] EQU [] goto QUICKINSTALL
+if not DEFINED IS_MINIMIZED set IS_MINIMIZED=1 && start "" /min "%~dpnx0" %* && exit
+REM
 mshta.exe "%~F0"
 exit
 :QUICKINSTALL
+cls
+echo Quick Installer
 adb connect 127.0.0.1:58526
 cls
 echo Quick Installer
